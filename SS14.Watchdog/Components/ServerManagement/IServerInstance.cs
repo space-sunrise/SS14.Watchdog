@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -35,6 +36,13 @@ namespace SS14.Watchdog.Components.ServerManagement
         ///     and probably binaries too.
         /// </summary>
         string InstanceDir { get; }
+
+        /// <summary>
+        ///     List of CPU cores to use for the server process.
+        ///     If set, the process will be restricted to run only on the specified CPU cores.
+        ///     Example: [0, 1] means use cores 0 and 1.
+        /// </summary>
+        IReadOnlyList<int>? CpuCores { get; }
 
         /// <summary>
         ///     Server has sent a ping to the watchdog confirming that it is, in fact, still alive.

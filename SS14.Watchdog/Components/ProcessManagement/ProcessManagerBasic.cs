@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SS14.Watchdog.Components.DataManagement;
 using SS14.Watchdog.Components.ServerManagement;
+using SS14.Watchdog.Configuration;
 
 namespace SS14.Watchdog.Components.ProcessManagement;
 
@@ -69,6 +71,14 @@ public sealed class ProcessManagerBasic : IProcessManager
 
             if (process == null)
                 throw new Exception("No process was started??");
+
+            if (instance.CpuCores != null)
+            {
+                var affinity = instance.CpuCores.Aggregate(0L, (mask, core) => mask | (1L << core));
+                process.ProcessorAffinity = (IntPtr)affinity;
+                _logger.LogDebug("Set processor affinity to {Affinity} for process {Pid}",
+                    affinity, process.Id);
+            }
         }
         catch (Exception e)
         {

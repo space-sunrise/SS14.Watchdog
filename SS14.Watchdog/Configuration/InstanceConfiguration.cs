@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using Microsoft.Diagnostics.NETCore.Client;
@@ -47,5 +48,12 @@ namespace SS14.Watchdog.Configuration
         /// </summary>
         [UsedImplicitly]
         public Dictionary<string, string> EnvironmentVariables { get; set; } = new();
+
+        /// <summary>
+        /// List of CPU cores to use for the server process.
+        /// If set, the process will be restricted to run only on the specified CPU cores.
+        /// Example: [0, 1] means use cores 0 and 1.
+        /// </summary>
+        public List<int>? CpuCores { get; set; }
     }
 }

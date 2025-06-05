@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Security.Cryptography;
@@ -62,6 +63,8 @@ namespace SS14.Watchdog.Components.ServerManagement
         private int _loadFailCount;
 
         private IProcessHandle? _runningServer;
+
+        public IReadOnlyList<int>? CpuCores => _instanceConfig.CpuCores;
 
         public ServerInstance(string key,
             InstanceConfiguration instanceConfig,
